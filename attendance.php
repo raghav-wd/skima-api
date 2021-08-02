@@ -13,8 +13,8 @@ function login($url,$data, $header){
     fclose($fp);
     $headers = $header;
     $login = curl_init();
-    curl_setopt($login, CURLOPT_COOKIEJAR, "cookie.txt");
-    curl_setopt($login, CURLOPT_COOKIEFILE, "cookie.txt");
+    // curl_setopt($login, CURLOPT_COOKIEJAR, "cookie.txt");
+    // curl_setopt($login, CURLOPT_COOKIEFILE, "cookie.txt");
     curl_setopt($login, CURLOPT_HEADER, TRUE);
     curl_setopt($login, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($login, CURLOPT_TIMEOUT, 40000);
@@ -32,7 +32,7 @@ function login($url,$data, $header){
 }                  
 
 $cookieKey = $creds->Cookie;
-// $cookieKey = "_iamadt_client_10002227248=c8081d266b5fa43863a292e4042802e279fe49921ff7a8cebd98643c0ad6edb4cc630f0b497945204fe57640b4aa7579ec0b1b45035d480adddffcb899670748;zccpn=bts;_iambdt_client_10002227248=da21117aae2d654a27e822cbf3724faac831334b968b990e41ae905c253cac36fb38f23bf26b0d6deb43a8634cdf0c6a7eee5a126142b99eb2f66733d36bb04d";
+// $cookieKey = "_iamadt_client_10002227248=c8081d266b5fa43863a292e4042802e2cfe2541d0b33f07414c555b315071a6618aba6463d69edea894f5f56b8407caeee81b9e5891741d67bc39a872d0ce04b;zccpn=bts;_iambdt_client_10002227248=d53c19d60e26edd17771c913c78bdd65ba3099f73b923a827462fbe3fafd08c59c19f6b42bfce33c629d03f0f33c45a85dcfbd1aa83b69d43c4f9ec5b6377e9a";
 
 if(true){
     $loginURL = "https://academia.srmist.edu.in/liveViewHeader.do";
@@ -40,11 +40,19 @@ if(true){
     $headers = array("Cookie: ".$cookieKey);
 
     $html = login($loginURL, $data, $headers);
+    $html = preg_replace_callback('/\\\\x([0-9A-F]{1,2})/i', function ($m) {
+        return chr(hexdec($m[1]));
+    }, $html);
     $html = substr($html, strpos($html, '<div class="mainDiv">'));
     $html = str_get_html($html);
 
     //Scraping the Academic Status Table from #My_Attendance page
     $json = [];
+    if(!isset($html->find('tbody')[0]))
+    {
+        echo '{"error":"cookie expired"}';
+        exit(0);
+    }
     $academic_status_html = $html->find('tbody')[0];
     foreach($academic_status_html->find('tr') as $ele)
     {
@@ -101,4 +109,4 @@ if(true){
     echo json_encode($response);
 } else{
     echo '{"error":"Account doesn\'t exit"}';
-}
+} 
