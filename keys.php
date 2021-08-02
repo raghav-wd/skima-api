@@ -48,11 +48,14 @@ $data = "sharedBy=srm_university&appLinkName=academia-academic-services&zccpn=bt
 $headers = array("Cookie: ".$cookieKey);
 
 $html = login($loginURL, $data, $headers);
+$html = preg_replace_callback('/\\\\x([0-9A-F]{1,2})/i', function ($m) {
+        return chr(hexdec($m[1]));
+    }, $html);
 $html = substr($html, strpos($html, '</style>'));
 $html = str_get_html($html);
 
 $obj = new stdClass();
-$obj->DayOrder = substr(strip_tags($html->find('font')[1]), 10);
+$obj->DayOrder = substr(strip_tags($html->find('font')[1]), 10, 1);
 
 $html = getL('https://academia.srmist.edu.in/', $headers);
 
@@ -61,6 +64,7 @@ $html = str_get_html($html);
 foreach($html->find('div[elname=zc-menudiv]')[0]->find('a') as $a){
     if(isset($a->complinkname)){
         $a = $a->complinkname;
+        $obj->isGrades = false;
         if(preg_match('/My_Time_Table/', $a))
         $obj->TimeTableKey = $a;
         else if(preg_match('/Common_Time_Table_Batch_1/', $a))
@@ -71,6 +75,8 @@ foreach($html->find('div[elname=zc-menudiv]')[0]->find('a') as $a){
         $obj->ScheduleKey = $a;
         else if(preg_match('/Academic_Plan/', $a))
         $obj->AcademicPlannerKey = $a;
+        else if(preg_match('/My_Result/', $a))
+        $obj->isGrades = true;
     }
 }
 $response = new stdClass();
