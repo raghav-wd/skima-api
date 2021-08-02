@@ -32,7 +32,7 @@ function login($url,$data, $header){
 }                  
 
 $cookieKey = $creds->Cookie;
-$scheduleKey = "Special_Time_Table_".$creds->ScheduleKey;
+$scheduleKey = $creds->ScheduleKey.$creds->Batch;
 
 $loginURL = "https://academia.srmist.edu.in/liveViewHeader.do";
 $data = "sharedBy=srm_university&appLinkName=academia-academic-services&zccpn=bts&viewLinkName=".$scheduleKey."&&urlParams=%7B%7D&isPageLoad=true";
