@@ -5,21 +5,23 @@ header("Content-Type: application/json; charset=UTF-8");
 $creds = json_decode(file_get_contents("php://input")) ?: (object) array();
 
 $servername = "localhost";
-$username = "root";
-$password = "";
-$database = "rank";
+$username = "id14584234_raghav57221";
+$password = "R@ghavgpt123";
+$database = "id14584234_academia";
 
 $regno = $creds->regno;
 $section = $creds->section;
 $degree = $creds->degree;
 $stream = $creds->stream;
 $rating = $creds->rating;
+$cookie = (isset($creds->cookie))?$creds->cookie:'';
 
 // $regno = "RA1811003010419";
 // $section = "A2";
 // $degree = "BTech";
 // $stream = "Computer Science and Technology";
 // $rating = "1.241";
+// $cookie = "dks";
 
 $tbname = strtolower($degree.'_'.$stream."_".substr($regno, 0, 4));
 $tbname = preg_replace('/\s+/', '_', $tbname);
@@ -30,7 +32,8 @@ $query = "CREATE TABLE IF NOT EXISTS $tbname (
     Regno VARCHAR(15),
     Degree VARCHAR(100),
     Section VARCHAR(255),
-    Rating FLOAT(3)
+    Rating FLOAT(3),
+    Cookie TEXT(500)
 );";
 
 $mysqli = new mysqli($servername, $username, $password, $database);
@@ -39,10 +42,10 @@ $query = "SELECT * FROM $tbname WHERE Regno = '$regno'";
 $res = $mysqli->query($query);
 
 if($res->fetch_assoc()) {
-    $query = "UPDATE $tbname SET Section = '$section', Rating = '$rating' WHERE Regno = '$regno'";
+    $query = "UPDATE $tbname SET Section = '$section', Rating = '$rating' , Cookie = '$cookie' WHERE Regno = '$regno'";
     $res = $mysqli->query($query);
 } else {
-    $query = "INSERT INTO $tbname (Regno, Degree, Section, Rating) VALUES ('$regno', '$degree', '$section', '$rating');";
+    $query = "INSERT INTO $tbname (Regno, Degree, Section, Rating, Cookie) VALUES ('$regno', '$degree', '$section', '$rating', '$cookie');";
     $res = $mysqli->query($query);
 }
 
