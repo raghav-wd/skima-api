@@ -32,12 +32,15 @@ function login($url,$data, $header){
 }                  
 
 $cookieKey = $creds->Cookie;
-$scheduleKey = $creds->ScheduleKey;
+$scheduleKey = "Special_Time_Table_".$creds->ScheduleKey;
 
 $loginURL = "https://academia.srmist.edu.in/liveViewHeader.do";
 $data = "sharedBy=srm_university&appLinkName=academia-academic-services&zccpn=bts&viewLinkName=".$scheduleKey."&&urlParams=%7B%7D&isPageLoad=true";
 $headers = array("Cookie: ".$cookieKey);
 $html = login($loginURL, $data, $headers);
+ $html = preg_replace_callback('/\\\\x([0-9A-F]{1,2})/i', function ($m) {
+        return chr(hexdec($m[1]));
+    }, $html);
 $html = substr($html, strpos($html, '<div class="mainDiv">'));
 $html = str_get_html($html);
 // Saving the data scraped in response and then parsing it in json
