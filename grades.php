@@ -41,6 +41,9 @@ $data = "sharedBy=srm_university&appLinkName=academia-academic-services&zccpn=bt
 $headers = array("Cookie: ".$cookieKey);
 
 $html = login($loginURL, $data, $headers);
+$html = preg_replace_callback('/\\\\x([0-9A-F]{1,2})/i', function ($m) {
+        return chr(hexdec($m[1]));
+    }, $html);
 $html = substr($html, strpos($html, '<div class="mainDiv">'));
 $html = str_get_html($html);
 
