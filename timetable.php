@@ -10,7 +10,7 @@ $cookieKey = $creds->Cookie;
 $timetableKey = $creds->TimeTableKey;
 
 include 'simple_html_dom.php';
-
+ 
 //Upload a blank cookie.txt to the same directory as this file with a CHMOD/Permission to 777
 function login($url,$data, $header){
     $fp = fopen("cookie.txt", "w");
@@ -41,14 +41,14 @@ $data = "sharedBy=srm_university&appLinkName=academia-academic-services&zccpn=bt
 $headers = array("Cookie: ".$cookieKey);
 
 $html = login($loginURL, $data, $headers);
- $html = preg_replace_callback('/\\\\x([0-9A-F]{1,2})/i', function ($m) {
-        return chr(hexdec($m[1]));
-    }, $html);
+$html = preg_replace_callback('/\\\\x([0-9A-F]{1,2})/i', function ($m) {
+    return chr(hexdec($m[1]));
+}, $html);
 $html = substr($html, strpos($html, '<div class="mainDiv">'));
 $html = str_get_html($html);
 
-$response = [];
 // echo $html;
+$response = [];
 $Student_Details = [];
 $c = 0;
 foreach($html->find('table')[0]->find('tr') as $tr){
@@ -77,15 +77,21 @@ if($html->find('table') == null){
     echo '{"error":"timetable table not found"}';
     exit(0);
 }
-foreach($html->find('table')[1]->find('tr') as $tr){
+// echo $html->find('table')[1];
+$html = $html->find('table')[1];
+$html = repair($html);
+$html = str_get_html($html);
+
+// echo $html;
+foreach($html->find('tr') as $tr){
     $i = 0;
     $obj = new stdClass();
     foreach($tr->find('td') as $td){
         if($c==0){
             array_push($jsonParams, $td->plaintext);
         } else {
+            // echo $td."<br/>";
             $obj->{$jsonParams[$i++]} = strip_tags($td->plaintext);
-            // echo $td->plaintext."<br/>";
         }
     }
     if($c==1)array_push($json, $obj);
@@ -96,3 +102,10 @@ $obj->TimeTable = $json;
 array_push($response, $obj);
 $response = json_encode($response);
 echo $response;
+
+function repair($content)
+ {
+     
+    $content = preg_replace('/<\/tr>/i', '</tr><tr>', $content);
+    return $content;
+ }
