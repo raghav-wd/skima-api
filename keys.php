@@ -61,10 +61,10 @@ $html = getL('https://academia.srmist.edu.in/', $headers);
 
 $html = str_get_html($html);
 
+$obj->isGrades = false;
 foreach($html->find('div[elname=zc-menudiv]')[0]->find('a') as $a){
     if(isset($a->complinkname)){
         $a = $a->complinkname;
-        $obj->isGrades = false;
         if(preg_match('/My_Time_Table/', $a))
         $obj->TimeTableKey = $a;
         else if(preg_match('/Special_Time_Table_/', $a))
