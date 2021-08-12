@@ -31,6 +31,7 @@ function login($url,$data, $header){
     unset($login);    
 }                  
 
+//Receiving post valaues from the client
 $cookieKey = $creds->Cookie;
 // $cookieKey = "_iamadt_client_10002227248=c8081d266b5fa43863a292e4042802e2cfe2541d0b33f07414c555b315071a6618aba6463d69edea894f5f56b8407caeee81b9e5891741d67bc39a872d0ce04b;zccpn=bts;_iambdt_client_10002227248=d53c19d60e26edd17771c913c78bdd65ba3099f73b923a827462fbe3fafd08c59c19f6b42bfce33c629d03f0f33c45a85dcfbd1aa83b69d43c4f9ec5b6377e9a";
 
