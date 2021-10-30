@@ -1,0 +1,23 @@
+{
+  "name": "srm-academia-api",
+  "version": "1.0.0",
+  "description": "Access SRM Academia data through the api with complete support of all the major data available, powered by our own ranking system.",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raghav-wd/SRM-Academia-API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raghav-wd/SRM-Academia-API/issues"
+  },
+  "homepage": "https://github.com/raghav-wd/SRM-Academia-API#readme"
+}
