@@ -71,8 +71,8 @@ foreach($html->find('div[elname=zc-menudiv]')[0]->find('a') as $a){
         $obj->ScheduleKey = "Special_Time_Table_";
         // else if(preg_match('/Special_Time_Table_/', $a))
         // $obj->ScheduleKey = $a;
-        else if(preg_match('/Virtual_Class_Time_Table/', $a))
-        $obj->ScheduleKey = $a;
+        else if(preg_match('/Unified_Timetable/', $a))
+        $obj->ScheduleKey = "Unified_Timetable_BATCH_";
         else if(preg_match('/Academic_Plan/', $a))
         $obj->AcademicPlannerKey = $a;
         else if(preg_match('/My_Result/', $a))

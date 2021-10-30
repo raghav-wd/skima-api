@@ -46,7 +46,7 @@ $html = preg_replace_callback('/\\\\x([0-9A-F]{1,2})/i', function ($m) {
 }, $html);
 $html = substr($html, strpos($html, '<div class="mainDiv">'));
 $html = str_get_html($html);
-
+echo $html;
 // echo $html;
 $response = [];
 $Student_Details = [];
