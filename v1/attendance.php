@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-include 'simple_html_dom.php';
+include './parser/simple_html_dom.php';
 
 //Receiving content/keys in json format
 $creds = json_decode(file_get_contents("php://input")) ?: (object) array();

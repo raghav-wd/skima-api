@@ -3,7 +3,7 @@ error_reporting(E_ERROR);
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-include 'simple_html_dom.php';
+include './parser/simple_html_dom.php';
 include './utils/Scraper.php';
 
 //Receiving content/keys in json format

@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/raghav-wd/SRM-Academia-API/issues"
   },
-  "homepage": "https://github.com/raghav-wd/SRM-Academia-API#readme"
+  "homepage": "https://github.com/raghav-wd/SRM-Academia-API#readme",
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.17.6",
+    "prettier": "^2.4.1"
+  }
 }

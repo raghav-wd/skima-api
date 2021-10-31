@@ -1,6 +1,7 @@
 <?php
 define("DOC_ROOT","/path/to/html");
-include 'simple_html_dom.php';
+
+include './parser/simple_html_dom.php';
 error_reporting(E_ERROR);
 
 header("Access-Control-Allow-Origin: *");

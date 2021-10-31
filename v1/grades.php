@@ -9,7 +9,7 @@ $creds = json_decode(file_get_contents("php://input")) ?: (object) array();
 $cookieKey = $creds->Cookie;
 // $cookieKey = "_iamadt_client_10002227248=c8081d266b5fa43863a292e4042802e279fe49921ff7a8cebd98643c0ad6edb4cc630f0b497945204fe57640b4aa7579ec0b1b45035d480adddffcb899670748;zccpn=bts;_iambdt_client_10002227248=da21117aae2d654a27e822cbf3724faac831334b968b990e41ae905c253cac36fb38f23bf26b0d6deb43a8634cdf0c6a7eee5a126142b99eb2f66733d36bb04d";
 
-include 'simple_html_dom.php';
+include './parser/simple_html_dom.php';
 
 //Upload a blank cookie.txt to the same directory as this file with a CHMOD/Permission to 777
 function login($url,$data, $header){
